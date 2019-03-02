@@ -117,7 +117,7 @@ app.layout = html.Div(style = {}, children =[
             className='six columns',
             children=html.Div(
                 style = styles['logo'],
-                children=[html.Img(src='./assets/logo.png')])
+                children=[html.Img(src='./assets/logo-madrid.png')])
         )
     ]),
     html.Div(
@@ -146,11 +146,12 @@ app.layout = html.Div(style = {}, children =[
                     value=time_now)
             ),
             html.Div([
+                html.H5('Actualización'),
                 html.Div(id='live-update-text'),
                 dcc.Interval(
                     id='interval-component',
-                    #interval=100000, # in milliseconds
-                    interval=1800000, # in milliseconds
+                    interval=100000, # in milliseconds
+                    #interval=3600000, # in milliseconds
                     n_intervals=0
                 )
             ]),
@@ -188,23 +189,8 @@ def update_metrics(n):
     data = import_data.generar_datos()
     style = {'padding': '5px', 'fontSize': '16px'}
     return[
-        
+        html.H6('Iteración: {0:.2f}'.format(n), style=style)
             ]
-
-
-@app.callback(
-        Output(component_id='time',component_property='options'),
-        [dash.dependencies.Input('interval-component', 'n_intervals')]
-)
-
-def update_dropdown2(wdg):
-    if dt.datetime.now().minute > 20:
-        time_now = horas[list(dict(itertools.islice(horas.items(), dt.datetime.now().hour)).keys())[-1]]
-    else:
-        time_now = horas[list(dict(itertools.islice(horas.items(), dt.datetime.now().hour)).keys())[-2]]
-    actualizar_datos(time, variable)
-    options=[{'label': i, "value": horas[i]} for i in dict(itertools.islice(horas.items(), dt.datetime.now().hour))],
-    return options
 
 
 @app.callback(
