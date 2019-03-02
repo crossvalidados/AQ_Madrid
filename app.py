@@ -61,10 +61,10 @@ def interpolation(x, y, z):
 
     return(xi, yi, zi)
 
-
 app = dash.Dash()
 app.scripts.config.serve_locally=True
 app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/dZVMbK.css"})
+server = app.server
 
 
 styles = {
