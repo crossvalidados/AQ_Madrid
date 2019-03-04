@@ -20,15 +20,14 @@ with open("./assets/map.png", "rb") as image_file:
 encoded_image = "data:image/png;base64," + encoded_string
 
 compuestos = {"Dióxido de Azufre": 1, "Monóxido de Carbono" : 6, "Monóxido de Nitrógeno": 7, "Dióxido de Nitrógeno": 8, "Partículas < 2.5 µm": 9, "Partículas < 10 µm": 10, "Óxidos de Nitrógeno": 12, "Ozono": 14, "Tolueno": 20, "Benceno": 30, "Etilbenceno": 35, "Metaxileno": 37, "Paraxileno": 38, "Ortoxileno": 39}
-horas = {"1 AM": "H01", "2 AM": "H02", "3 AM": "H03", "4 AM": "H04", "5 AM": "H05", "6 AM": "H06", "7 AM": "H07", "8 AM": "H08", "9 AM": "H09", "10 AM": "H10", "11 AM": "H11", "12 AM": "H12", "1 PM": "H13", "2 PM": "H14", "3 PM": "H15", "4 PM": "H16", "5 PM": "H17"}
+horas = {"1 AM": "H01", "2 AM": "H02", "3 AM": "H03", "4 AM": "H04", "5 AM": "H05", "6 AM": "H06", "7 AM": "H07", "8 AM": "H08", "9 AM": "H09", "10 AM": "H10", "11 AM": "H11", "12 AM": "H12", "1 PM": "H13", "2 PM": "H14", "3 PM": "H15", "4 PM": "H16", "5 PM": "H17", "6 PM": "H18", "7 PM": "H19", "8 PM": "H20", "9 PM": "H21", "10 PM": "H22", "11 PM": "H23", "12 PM": "H24"}
 
 data = import_data.generar_datos()
 
-if dt.datetime.now().minute > 20:
-    time_now = horas[list(dict(itertools.islice(horas.items(), dt.datetime.now().hour)).keys())[-1]]
-else:
-    time_now = horas[list(dict(itertools.islice(horas.items(), dt.datetime.now().hour)).keys())[-2]]
-
+# Obtenemos la última hora con datos distintos de 0
+for i in range(len(horas)):
+   if(sum(data[horas[list(horas.keys())[i]]].values) != 0):
+       latest = i     
 
 def actualizar_datos(tiempo, variable):
     global datos, width, height, z, x, y, x_mean, y_mean
@@ -117,7 +116,7 @@ app.layout = html.Div(style = {}, children =[
             className='six columns',
             children=html.Div(
                 style = styles['logo'],
-                children=[html.Img(src='./assets/logo.png')])
+                children=[html.Img(src='https://www.madrid.es/assets/images/logo-madrid.png')])
         )
     ]),
     html.Div(
@@ -141,16 +140,13 @@ app.layout = html.Div(style = {}, children =[
                 style = {'color': colors['background']},
                 children =
                 dcc.Dropdown(
-                    id='time',
-                    options=[{'label': i, "value": horas[i]} for i in dict(itertools.islice(horas.items(), dt.datetime.now().hour))],
-                    value=time_now)
+                    id='time')
             ),
             html.Div([
                 html.Div(id='live-update-text'),
                 dcc.Interval(
                     id='interval-component',
-                    #interval=100000, # in milliseconds
-                    interval=1800000, # in milliseconds
+                    interval=1000*60*30, # in milliseconds
                     n_intervals=0
                 )
             ]),
@@ -187,24 +183,23 @@ def update_metrics(n):
     global data
     data = import_data.generar_datos()
     style = {'padding': '5px', 'fontSize': '16px'}
-    return[
-        
-            ]
+    return[]
 
+@app.callback(Output('time', 'options'),
+              [Input('interval-component', 'n_intervals')])
+def update_date_dropdown(name):
+    global latest
+    
+    for i in range(len(horas)):
+        if(sum(data[horas[list(horas.keys())[i]]].values) != 0):
+            latest = i 
+    return [{'label': i, "value": horas[i]} for i in dict(itertools.islice(horas.items(), latest + 1))]
 
-@app.callback(
-        Output(component_id='time',component_property='options'),
-        [dash.dependencies.Input('interval-component', 'n_intervals')]
-)
+@app.callback(Output('time', 'value'),
+              [Input('time', 'options')])
+def update_value_dropdown(available_options):
 
-def update_dropdown2(wdg):
-    if dt.datetime.now().minute > 20:
-        time_now = horas[list(dict(itertools.islice(horas.items(), dt.datetime.now().hour)).keys())[-1]]
-    else:
-        time_now = horas[list(dict(itertools.islice(horas.items(), dt.datetime.now().hour)).keys())[-2]]
-    actualizar_datos(time, variable)
-    options=[{'label': i, "value": horas[i]} for i in dict(itertools.islice(horas.items(), dt.datetime.now().hour))],
-    return options
+    return available_options[-1]['value']
 
 
 @app.callback(
