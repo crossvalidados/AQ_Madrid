@@ -2,16 +2,16 @@
 
 Mapas de la contaminación en Madrid a tiempo real.
 
-Autores: Manuel Bajo Buenestado y Kevin Craig Alisauskas.
-Licencia: GNU General Public License version 3 (GPLv3).
+- Autores: Manuel Bajo Buenestado y Kevin Craig Alisauskas.
+- Licencia: GNU General Public License version 3 (GPLv3).
 
 ![App image](assets/app.png)
 
-En este proyecto se ha realizado una aplicación web utilizando Dash. La aplicación muestra unos mapas de contaminación en Madrid con datos a tiempo real, obtenidos del [Portal de Datos Abiertos del Ayuntamiento de Madrid](https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=41e01e007c9db410VgnVCM2000000c205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default).
+En este proyecto se ha realizado una aplicación web utilizando Dash. La aplicación muestra unos mapas de contaminación en Madrid con datos a tiempo real obtenidos del [Portal de Datos Abiertos del Ayuntamiento de Madrid](https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=41e01e007c9db410VgnVCM2000000c205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default).
 
 ## Datos
 
-Se ha creado una función `generar_datos` dentro de un fichero `import_data.py` con el que se procede a la descarga de los dos ficheros necesarios, el de datos y el de estaciones, y la adaptación de los mismos en forma de dataframe con los valores de interés, las estaciones, y las coordenadas de latitud y longitud ya en el formato necesario para su ejecución con Dash. Si la aplicación se mantiene abierta busca los últimos datos disponibles cada media hora y actualiza la información mostrada en los mapas.
+Se ha creado una función `generar_datos` dentro de un fichero `import_data.py` con el que se procede a la descarga de los dos ficheros de datos necesarios, el de datos de contaminación y el de estaciones de medida, y la adaptación de los mismos en forma de dataframe que incluye las medidas de contaminación y los datos de las estaciones de medida. Si la aplicación se mantiene abierta busca los últimos datos disponibles cada media hora y actualiza la información mostrada en los mapas.
 
 ## Mapas
 
