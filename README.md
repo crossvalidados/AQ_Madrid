@@ -3,6 +3,7 @@
 Mapas de la contaminación en Madrid a tiempo real.
 
 Autores: Manuel Bajo Buenestado y Kevin Craig Alisauskas.
+Licencia: GNU General Public License version 3 (GPLv3).
 
 ![App image](assets/app.png)
 
@@ -10,7 +11,7 @@ En este proyecto se ha realizado una aplicación web utilizando Dash. La aplicac
 
 ## Datos
 
-Se ha creado una función "generar_datos" dentro de un fichero "import_data.py" con el que se procede a la descarga de los dos ficheros necesarios, el de datos y el de estaciones, y la adaptación de los mismos en forma de dataframe con los valores de interés, las estaciones, y las coordenadas de latitud y longitud ya en el formato necesario para su ejecución con Dash. Si la aplicación se mantiene abierta busca los últimos datos disponibles cada media hora y actualiza la información mostrada en los mapas.
+Se ha creado una función `generar_datos` dentro de un fichero `import_data.py` con el que se procede a la descarga de los dos ficheros necesarios, el de datos y el de estaciones, y la adaptación de los mismos en forma de dataframe con los valores de interés, las estaciones, y las coordenadas de latitud y longitud ya en el formato necesario para su ejecución con Dash. Si la aplicación se mantiene abierta busca los últimos datos disponibles cada media hora y actualiza la información mostrada en los mapas.
 
 ## Mapas
 
