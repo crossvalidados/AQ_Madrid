@@ -104,7 +104,6 @@ colors = {
 }
 
 
-
 app.layout = html.Div(style = {}, children =[
     html.Div(
        style = styles['header'], children = [
@@ -151,6 +150,9 @@ app.layout = html.Div(style = {}, children =[
                 )
             ]),
             html.Br(),
+            html.A('Sobre esta app y los datos', href='https://github.com/crossvalidados/AQ_Madrid/blob/master/README.md', target="_blank"),
+            html.Br(),
+            html.A('Código fuente', href='https://github.com/crossvalidados/AQ_Madrid', target="_blank"),
             html.H6("Autores:", style={'color': colors['text2'], 'font-size': '1em'}),
             html.H6("Manuel Bajo y Kevin Craig", style={'color': colors['text2'], 'font-size': '1em'})
 
